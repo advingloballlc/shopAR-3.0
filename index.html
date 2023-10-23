@@ -25,8 +25,7 @@
         const directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
         directionalLight.position.set(10, 15, 10);
         scene.add(directionalLight);
-        const ARbody = document.querySelector(".ar-body");
-        console.log("AR body");
+
         // Set up the WebGLRenderer, which handles rendering to the session's base layer.
         const renderer = new THREE.WebGLRenderer({
           alpha: true,
@@ -134,9 +133,9 @@
     <!-- Starting an immersive WebXR session requires user interaction.
     We start this one with a simple button. -->
     <button onclick="activateXR()">Start Hello WebXR</button>
-    <script
-      data-consolejs-channel="55e44c11-7d49-1dff-ff3d-9397a8570562"
-      src="https://remotejs.com/agent/agent.js"
-    ></script>
   </body>
+  <script
+    data-consolejs-channel="0e9d802c-2108-0b4f-3b19-466a2bae8341"
+    src="https://remotejs.com/agent/agent.js"
+  ></script>
 </html>
