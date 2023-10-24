@@ -13,7 +13,11 @@
     <script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script>
   </head>
   <body class="ar-body">
-    <script>
+    <script type="module">
+      import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
+      import { FontLoader } from "three/addons/loaders/FontLoader.js";
+      // TEXT //
+
       async function activateXR() {
         console.log("Activate XR...");
         // Add a canvas element and initialize a WebGL context that is compatible with WebXR.
@@ -59,6 +63,22 @@
           space: viewerSpace,
         });
 
+        const fontLoader = new FontLoader();
+
+        fontLoader.load("./helvetiker-bold.typefaces.json", function (font) {
+          const geometry = new TextGeometry("Hello three.js!", {
+            font: font,
+            size: 80,
+            height: 5,
+            curveSegments: 12,
+            bevelEnabled: true,
+            bevelThickness: 10,
+            bevelSize: 8,
+            bevelOffset: 0,
+            bevelSegments: 5,
+          });
+        });
+
         const loader = new THREE.GLTFLoader();
         let reticle;
         loader.load(
@@ -72,7 +92,7 @@
         );
 
         let flower;
-        loader.load("/Orange.gltf", function (gltf) {
+        loader.load("../Orange.gltf", function (gltf) {
           flower = gltf.scene;
           console.log("Load flower");
         });
