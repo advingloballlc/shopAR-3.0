@@ -1,3 +1,4 @@
+import * as THREE from "three";
 import { ExtrudeGeometry } from "three";
 
 class TextGeometry extends ExtrudeGeometry {

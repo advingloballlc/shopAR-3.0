@@ -1,3 +1,4 @@
+import * as THREE from "three";
 import { FileLoader, Loader, ShapePath } from "three";
 
 class FontLoader extends Loader {
