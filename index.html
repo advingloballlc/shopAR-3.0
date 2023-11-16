@@ -88,16 +88,19 @@
 
         const loader = new THREE.GLTFLoader();
         let reticle;
-        loader.load("./fest-corner-left.glb", function (gltf) {
-          reticle = gltf.scene;
-          reticle.visible = false;
-          scene.add(reticle);
-          console.log("Load marker");
-        });
+        loader.load(
+          "https://immersive-web.github.io/webxr-samples/media/gltf/reticle/reticle.gltf",
+          function (gltf) {
+            reticle = gltf.scene;
+            reticle.visible = false;
+            scene.add(reticle);
+            console.log("Load marker");
+          }
+        );
 
         let flower;
 
-        loader.load("./fest-corner-left.glb", function (gltf) {
+        loader.load("/fest-corner-left.glb", function (gltf) {
           flower = gltf.scene;
           console.log("Load flower");
         });
