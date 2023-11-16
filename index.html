@@ -88,43 +88,28 @@
 
         const loader = new THREE.GLTFLoader();
         let reticle;
-        loader.load(
-          "https://immersive-web.github.io/webxr-samples/media/gltf/reticle/reticle.gltf",
-          function (gltf) {
-            reticle = gltf.scene;
-            reticle.visible = false;
-            scene.add(reticle);
-            console.log("Load marker");
-          }
-        );
+        loader.load("./fest-corner-left.glb", function (gltf) {
+          reticle = gltf.scene;
+          reticle.visible = false;
+          scene.add(reticle);
+          console.log("Load marker");
+        });
 
-        let modelPaths = ["./fest-corner-left.glb", "./fest-corner-right.glb"]; // Array to store all model paths
-        let currentPathIndex = 0; // index in the path array of the currently showing model
         let flower;
 
-        loadModel(currentPathIndex);
-
-        function loadModel(index) {
-          loader.load(modelPaths[index], function (gltf) {
-            flower = gltf.scene;
-            console.log("Load flower");
-          });
-          session.addEventListener("select", (event) => {
-            if (flower) {
-              console.log("Flower Placed!");
-              const clone = flower.clone();
-              clone.position.copy(reticle.position);
-              scene.add(clone);
-            }
-          });
-        }
-        changeColorButton.addEventListener("click", () => {
-          console.log("CLICKED");
+        loader.load("./fest-corner-left.glb", function (gltf) {
+          flower = gltf.scene;
+          console.log("Load flower");
         });
-        function next() {
-          currentPathIndex++;
-          loadModel(currentPathIndex);
-        }
+        session.addEventListener("select", (event) => {
+          if (flower) {
+            console.log("Flower Placed!");
+            const clone = flower.clone();
+            clone.position.copy(reticle.position);
+            scene.add(clone);
+          }
+        });
+
         // Create a render loop that allows us to draw on the AR view.
         const onXRFrame = (time, frame) => {
           // Queue up the next draw request.
