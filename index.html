@@ -16,7 +16,7 @@
     <div id="overlay">
       <header>
         <div id="session-info">
-          <button class="color-change barebones-button" disabled>
+          <button data-id="0" class="color-change" style="display: none">
             Change color
           </button>
         </div>
@@ -64,16 +64,12 @@
           },
         });
         if (session.domOverlayState) {
-          document.getElementById("session-info").innerHTML =
-            "<button>AR BUTTON DYNAMIC</button>";
+          const sessionButton = document.getElementById("session-info");
+          // sessionButton.innerHTML = "<button>AR BUTTON DYNAMIC</button>";
           // changeColorButton.style.display = "block";
         }
         session.updateRenderState({
           baseLayer: new XRWebGLLayer(session, gl),
-        });
-        session.requestReferenceSpace("local").then((refSpace) => {
-          xrRefSpace = refSpace;
-          session.requestAnimationFrame(onXRFrame);
         });
 
         // A 'local' reference space has a native origin that is located
@@ -98,21 +94,38 @@
           }
         );
 
-        let flower;
+        let modelPaths = ["/Orange.gltf", "./Orange.gltf"]; // Array to store all model paths
+        let currentPathIndex = 0; // index in the path array of the currently showing model
+        let currentModel = modelPaths[currentPathIndex];
+        console.log("Line:104", currentModel);
+        changeColorButton.style.display = "block";
+        loadModel(currentPathIndex);
 
-        loader.load("/fest-corner-left.glb", function (gltf) {
-          flower = gltf.scene;
-          console.log("Load flower");
+        function loadModel(index) {
+          console.log("INSIDE LOADMODEL FUNCTION");
+          // if (currentModel) {
+          //   scene.remove(currentModel);
+          // }
+          loader.load(currentModel, (gltf) => {
+            console.log("inside loader.load function");
+            // Model = modelPaths[index];
+            // console.log(Model);
+            // scene.add(Model);
+            // console.log("Log after first model loads");
+            ARModel = gltf.scene;
+            console.log("AR MODEL:", ARModel);
+            console.log("GLTF SCENE:", gltf.scene);
+            console.log("after ARMODEL");
+          });
+        }
+        changeColorButton.addEventListener("click", () => {
+          next();
+          console.log("We`re inside change color button");
         });
-        session.addEventListener("select", (event) => {
-          if (flower) {
-            console.log("Flower Placed!");
-            const clone = flower.clone();
-            clone.position.copy(reticle.position);
-            scene.add(clone);
-          }
-        });
-
+        function next() {
+          currentPathIndex++;
+          loadModel(currentPathIndex);
+        }
         // Create a render loop that allows us to draw on the AR view.
         const onXRFrame = (time, frame) => {
           // Queue up the next draw request.
@@ -164,7 +177,7 @@
     <button onclick="activateXR()">Start Hello WebXR</button>
   </body>
   <script
-    data-consolejs-channel="83d9450b-5f4c-f4a0-3aa8-a440210023e8"
+    data-consolejs-channel="e73555fd-5809-6246-e00e-1443d3e5e443"
     src="https://remotejs.com/agent/agent.js"
   ></script>
 </html>
